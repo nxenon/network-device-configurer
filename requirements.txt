@@ -1,0 +1,1 @@
+just python 3 and telnet enabled on Cisco device :)
