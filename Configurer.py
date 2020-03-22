@@ -2,6 +2,17 @@ import time
 import sys
 import socket
 from telnetlib import Telnet as telnet
+
+# get default requirements for telnet connection
+target = ""
+telnet_port = ""
+username = ""
+password = ""
+local_password = ""
+default_timeout = 2
+if not telnet_port :
+    telnet_port = 23
+
 print("You had to configure the device to enable Telnet at first !")
 
 class NetDeviceConfigurer() :
@@ -162,9 +173,33 @@ username = input("Your remote username :")
 password = input("Your *remote* password :")
 local_password = input("Your *local* password :")
 default_timeout = 2
-if not telnet_port :
+if not telnet_port:
     telnet_port = 23
-connection = NetDeviceConfigurer(target ,telnet_port ,username ,password ,local_password ,default_timeout)
+
+
+
+connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
+
+update_again = True
+def update_connection_data():
+
+    while True :
+        # get default requirements for telnet connection
+        target = input("Your target ip address :")
+        telnet_port = input("telnet port (default = 23) :")
+        username = input("Your remote username :")
+        password = input("Your *remote* password :")
+        local_password = input("Your *local* password :")
+        default_timeout = 2
+        if not telnet_port:
+            telnet_port = 23
+        again_or_not_up = input("Correct ? (y) :").lower()
+        connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
+        if again_or_not_up == "y" or again_or_not_up == "yes" :
+            break
+        else :
+            print("")
+
 
 config_again = True
 while config_again :
@@ -172,6 +207,9 @@ while config_again :
     print("\n\t1) set an IP address")
     print("\n\t2) Create a new user")
     print("\n\t3) Enable SSH")
+    print("\nUpdate the connection information (ip,pass and ..) ? type => (update)")
+
+    connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
 
     option_chosen = input("\nOption number :").lower()
     if option_chosen == "1" or option_chosen == "set an ip address":
@@ -197,6 +235,9 @@ while config_again :
             config_again = True
         else:
             config_again = False
+
+    elif option_chosen == "u" or option_chosen == "update" :
+        update_connection_data()
 
     else:
         print("Invalid option")
