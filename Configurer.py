@@ -1,6 +1,6 @@
 import sys
 import os
-from basic.main import NetDeviceConfigurer
+from packages.basic.main import NetDeviceConfigurer
 import getpass
 from telnetlib import Telnet as telnet
 # create the logs folder for logs

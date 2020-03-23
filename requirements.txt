@@ -1,1 +1,5 @@
 just python 3 and telnet enabled on Cisco device :)
+
+Tested on :
+    Routers :
+        C7200 , C3745
