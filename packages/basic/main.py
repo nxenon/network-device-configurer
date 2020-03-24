@@ -5,6 +5,7 @@ import socket
 from telnetlib import Telnet as telnet
 
 print("You had to configure the device to enable Telnet at first !")
+print("")
 
 class NetDeviceConfigurer() :
     '''configuring network device with telnet'''
