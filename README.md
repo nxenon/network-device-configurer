@@ -1,8 +1,13 @@
 ## Cisco device basic configurer
-You can :
+## You can :
+
 - [x] Set ip address for interfaces
 - [x] Create users
 - [x] Enable SSH
+
+- Routing options :
+-[x] Show `routing table`
+
 
 ## Note :
 - You have to config the device for `first telnet connection`
