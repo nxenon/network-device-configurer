@@ -6,7 +6,8 @@
 - [x] Enable SSH
 
 - Routing options :
--[x] Show `routing table`
+
+- [x] Show routing table
 
 
 ## Note :
