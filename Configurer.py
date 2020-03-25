@@ -2,6 +2,8 @@ import sys
 import os
 from packages.basic.main import NetDeviceConfigurer
 from packages.routing_options.main_routing import Routing
+from packages.interface_options.main_interface import Interface
+
 import getpass
 from telnetlib import Telnet as telnet
 # create the logs folder for logs
@@ -21,20 +23,22 @@ default_timeout = 2
 update_again = True
 def update_connection_data():
     while True :
-        global target,telnet_port,username,password,local_password,default_timeout,connection,routing_connection
+        global target,telnet_port,username,password,local_password,default_timeout,connection,connection_routing,connection_interface
         # get default requirements for telnet connection
-        target = input("Your target ip address :")
-        telnet_port = input("telnet port (default = 23) :")
-        username = input("Your remote username :")
-        password = getpass.getpass("Your *remote* password :")
-        local_password = getpass.getpass("Your *local* password :")
+        target = input("Your target ip address :").strip()
+        telnet_port = input("telnet port (default = 23) :").strip()
+        username = input("Your remote username :").strip()
+        password = getpass.getpass("Your *remote* password :").strip()
+        local_password = getpass.getpass("Your *local* password :").strip()
         default_timeout = 2
         if not telnet_port:
             telnet_port = 23
 
         connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
         # set a connection to Routing class
-        routing_connection = Routing(target, telnet_port, username, password, local_password, default_timeout)
+        connection_routing = Routing(target, telnet_port, username, password, local_password, default_timeout)
+        # set a connection for Interface class
+        connection_interface = Interface(target, telnet_port, username, password, local_password, default_timeout)
 
         correct_or_not_up = input("Correct ? (y) :").lower()
         if correct_or_not_up == "y" or correct_or_not_up == "yes" :
@@ -44,31 +48,55 @@ def update_connection_data():
 
 connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
 # set a connection to Routing class
-routing_connection = Routing(target, telnet_port, username, password, local_password, default_timeout)
+connection_routing = Routing(target, telnet_port, username, password, local_password, default_timeout)
+# set a connection for Interface class
+connection_interface = Interface(target, telnet_port, username, password, local_password, default_timeout)
 
 update_connection_data()
 
 config_again = True
 config_again_routing = True
+config_again_interface = True
 while config_again :
     print("Options :")
-    print("\n\t1) set an IP address")
+    print("\n\t1) Interface options")
     print("\n\t2) Create a new user")
     print("\n\t3) Enable SSH")
-    print("\n\t4) Show routing options")
+    print("\n\t4) Routing options")
     print("\nUpdate the connection information (ip,pass and ..) ? type => (update)")
-    print("\nquit => (exit) :")
-
-    connection = NetDeviceConfigurer(target, telnet_port, username, password, local_password, default_timeout)
+    print("\nquit => (exit)")
 
     option_chosen = input("\nOption number :").lower()
-    if option_chosen == "1" or option_chosen == "set an ip address":
-        connection.set_ip()
-        again_or_not = input("again ? (y) :").lower()
-        if again_or_not == "y" or again_or_not == "yes" :
-            config_again = True
-        else:
-            config_again = False
+    if option_chosen == "1" or option_chosen == "interface options":
+
+        while config_again_interface:
+            print("--")
+            print("")
+            print("Interface options :")
+            print("\n\t1) Show interfaces status")
+            print("\n\t2) Set ip address")
+            print("\n\t3) Turn a interface off")
+            print("\n\t4) Turn a interface on")
+            print("\n Go to previous menu => (Back)")
+            option_chosen_interface = input("\nOption number :").lower()
+
+            if option_chosen_interface == "1" or option_chosen_interface == "show interfaces status":
+                connection_interface.show_interfaces_status()
+            elif option_chosen_interface == "2" or option_chosen_interface == "set ip address":
+                connection_interface.set_ip()
+            elif option_chosen_interface == "3" or option_chosen_interface == "turn a interface off":
+                connection_interface.interface_turn_off()
+            elif option_chosen_interface == "4" or option_chosen_interface == "turn a interface on":
+                connection_interface.interface_turn_on()
+            elif option_chosen_interface == "back" or option_chosen_interface == "go to previous menu" :
+                break
+            else:
+                print("Invalid option")
+                again_or_not = input("again ? (y) :").lower()
+                if again_or_not == "y" or again_or_not == "yes":
+                    config_again_routing = True
+                else:
+                    break
 
     elif option_chosen == "2" or option_chosen == "create a new user" :
         connection.create_user()
@@ -96,10 +124,13 @@ while config_again :
             print("")
             print("Routing options :")
             print("\n\t1) Show routing table")
-            print("\n Go to previous menu => (Back) :")
+            print("\n\t2) Set static route")
+            print("\n Go to previous menu => (Back)")
             option_chosen_routing = input("\nOption number :").lower()
             if option_chosen_routing == "1" or option_chosen_routing == "show routing table":
-                routing_connection.show_routing_table()
+                connection_routing.show_routing_table()
+            elif option_chosen_routing == "2" or option_chosen_routing == "set static route":
+                connection_routing.set_static_route()
             elif option_chosen_routing == "back" or option_chosen_routing == "go to previous menu" :
                 break
             else:
@@ -119,7 +150,6 @@ while config_again :
             config_again = True
         else:
             config_again = False
-
 
 print("Exit ...")
 exit()
