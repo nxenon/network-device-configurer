@@ -1,3 +1,5 @@
+__coder__ = "KhodeXenon"
+__my_email__ = "KhodeXenon@gmail.com"
 import sys
 import os
 from packages.basic.main import NetDeviceConfigurer

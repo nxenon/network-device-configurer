@@ -1,4 +1,5 @@
 ## Cisco device configurer
+This program is for configure the Cisco device via `telnet` connection (written in `Python`)
 ## You can :
 
 - [x] Create users
