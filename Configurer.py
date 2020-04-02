@@ -2,9 +2,9 @@ __coder__ = "KhodeXenon"
 __my_email__ = "KhodeXenon@gmail.com"
 import sys
 import os
-from packages.basic.main import NetDeviceConfigurer
-from packages.routing_options.main_routing import Routing
-from packages.interface_options.main_interface import Interface
+from packages.telnet.basic.main import NetDeviceConfigurer
+from packages.telnet.routing_options.main_routing import Routing
+from packages.telnet.interface_options.main_interface import Interface
 
 import getpass
 from telnetlib import Telnet as telnet

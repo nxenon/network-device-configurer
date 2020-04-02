@@ -1,8 +1,8 @@
 import sys
 from telnetlib import Telnet as telnet
 import socket
-sys.path.append("../")
-from packages.basic.main import NetDeviceConfigurer
+sys.path.append(".../")
+from packages.telnet.basic.main import NetDeviceConfigurer
 
 class Routing(NetDeviceConfigurer):
     def __init__(self ,target ,telnet_port ,username ,password ,localpassword ,default_timeout):

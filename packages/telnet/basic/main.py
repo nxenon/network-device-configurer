@@ -1,6 +1,6 @@
 import time
 import sys
-sys.path.append("../")
+sys.path.append(".../")
 import socket
 from telnetlib import Telnet as telnet
 
