@@ -1,5 +1,9 @@
-__coder__ = "KhodeXenon"
-__my_email__ = "KhodeXenon@gmail.com"
+#!/usr/bin/env python3
+
+'''
+Cisco Device Configurer Script
+'''
+
 import sys
 import os
 from packages.telnet.basic.main import NetDeviceConfigurer
