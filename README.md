@@ -1,5 +1,5 @@
-## Cisco device configurer
-This program is for configure the Cisco device via `telnet` connection (written in `Python`)
+## Cisco Device Configurer
+This script is for configuring some Cisco device via `telnet` connection.
 ## You can :
 
 - [x] Create users
